@@ -1,0 +1,14 @@
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\bin\Debug\net8.0\OOPCard.exe
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\bin\Debug\net8.0\OOPCard.deps.json
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\bin\Debug\net8.0\OOPCard.runtimeconfig.json
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\bin\Debug\net8.0\OOPCard.dll
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\bin\Debug\net8.0\OOPCard.pdb
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\OOPCard.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\OOPCard.AssemblyInfoInputs.cache
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\OOPCard.AssemblyInfo.cs
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\OOPCard.csproj.CoreCompileInputs.cache
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\OOPCard.dll
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\refint\OOPCard.dll
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\OOPCard.pdb
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\OOPCard.genruntimeconfig.cache
+C:\Users\ethan\Documents\Schoolwork\Computing\Coding stuff\OOPCard\obj\Debug\net8.0\ref\OOPCard.dll
