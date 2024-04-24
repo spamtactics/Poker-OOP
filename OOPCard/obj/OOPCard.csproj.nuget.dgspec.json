@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ethan\\Documents\\Schoolwork\\Computing\\Coding stuff\\OOPCard\\OOPCard.csproj": {}
+    "C:\\Users\\ethan\\Documents\\GitHub\\Poker-OOP\\OOPCard\\OOPCard.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ethan\\Documents\\Schoolwork\\Computing\\Coding stuff\\OOPCard\\OOPCard.csproj": {
+    "C:\\Users\\ethan\\Documents\\GitHub\\Poker-OOP\\OOPCard\\OOPCard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ethan\\Documents\\Schoolwork\\Computing\\Coding stuff\\OOPCard\\OOPCard.csproj",
+        "projectUniqueName": "C:\\Users\\ethan\\Documents\\GitHub\\Poker-OOP\\OOPCard\\OOPCard.csproj",
         "projectName": "OOPCard",
-        "projectPath": "C:\\Users\\ethan\\Documents\\Schoolwork\\Computing\\Coding stuff\\OOPCard\\OOPCard.csproj",
+        "projectPath": "C:\\Users\\ethan\\Documents\\GitHub\\Poker-OOP\\OOPCard\\OOPCard.csproj",
         "packagesPath": "C:\\Users\\ethan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ethan\\Documents\\Schoolwork\\Computing\\Coding stuff\\OOPCard\\obj\\",
+        "outputPath": "C:\\Users\\ethan\\Documents\\GitHub\\Poker-OOP\\OOPCard\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ethan\\AppData\\Roaming\\NuGet\\NuGet.Config"

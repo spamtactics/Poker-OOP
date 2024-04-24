@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OOPCard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26d7059df8e97d9cb3a36edbf1e89435249a76b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("OOPCard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OOPCard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

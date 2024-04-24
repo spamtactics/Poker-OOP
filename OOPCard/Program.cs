@@ -30,15 +30,18 @@ class Program {
         {
             TexasHoldem poker = new TexasHoldem(playerNames);
             Hand someHand = new Hand(new Deck());
-            Card[] rFlush = new Card[5];
+            Card[] rFlush = new Card[7];
             rFlush[0] = new Card(10, 1);
             rFlush[1] = new Card(11, 1);
             rFlush[2] = new Card(12, 1);
             rFlush[3] = new Card(13, 1);
             rFlush[4] = new Card(1, 1);
-            Console.WriteLine(poker.CheckRoyalFlush(someHand, rFlush));
+            rFlush[5] = someHand.GetHand()[0];
+            rFlush[6] = someHand.GetHand()[1];
+            
+            Console.WriteLine(poker.CheckStraightFlush(rFlush)[0]);
             poker.RunGame();
-            poker.RestartPoker();
+            poker.RestartGame();
             
         }
     }
@@ -249,11 +252,7 @@ class Player
 {
     private Hand hand;
     private string name;
-
-    public Player()
-    {
-        //this is so inheritance can occur
-    }
+    
     public Player(Hand hand, string playerName)
     {
         this.hand = hand;
@@ -300,10 +299,9 @@ class Player
 }
 class Cheater : Player
 {
-    public Cheater(Hand hand, string playerName)
+    public Cheater(Hand hand, string playerName) : base(hand, playerName)
     {
-        this.ResetHand(hand);
-        this.SetName(playerName);
+        
     }
 
     public void DrawSleeveCard(int num, int suit)
@@ -313,11 +311,11 @@ class Cheater : Player
         this.ResetHand(newHand);
     }
 }
-class Game
+abstract class Game
 {
     private List<Player> players;
-    private Deck deck;
-    public void RestartGame()
+    protected Deck deck;
+    public virtual void RestartGame()
     {
         deck = new Deck();
         deck.ShuffleDeck();
@@ -340,22 +338,28 @@ class Game
     {
         return players;
     }
-    public Game()
+    
+    public Game(string[] playerNames, bool burn)
     {
+        
         players = new List<Player>();
         deck = new Deck();
         deck.ShuffleDeck();
-    }
-}
-class BlackJack : Game
-{
-    public BlackJack(string[] playerNames)
-    {
+        if(burn){
+            deck.TakeCard();
+        }
         for (int index = 0; index < playerNames.Length; index++)
         {
             Hand hand = new Hand(this.GetDeck());
             this.AddPlayer(new Player(hand,playerNames[index]));
         }
+    }
+}
+class BlackJack : Game
+{
+    public BlackJack(string[] playerNames) : base(playerNames,false)
+    {
+        
     }
 
     public void RunGame()
@@ -390,7 +394,7 @@ class BlackJack : Game
                 }
                 else
                 {
-                    //player cannot do anthing
+                    //player cannot do anything
                     Console.WriteLine("You have busted");
                 }
             }
@@ -414,28 +418,20 @@ class BlackJack : Game
 
 class TexasHoldem : Game
 {
-    private Card[] burnt;
     private Card[] flop;
     private int turns;
-    public TexasHoldem(string[] playerNames)
+    public TexasHoldem(string[] playerNames) : base (playerNames,true)
     {
-        burnt = new Card[4];
         flop = new Card[5];
         turns = 1;
-        burnt[0] = this.GetDeck().TakeCard();
-        for (int index = 0; index < playerNames.Length; index++)
-        {
-            Hand hand = new Hand(this.GetDeck());
-            this.AddPlayer(new Player(hand,playerNames[index]));
-        }
-       
     }
     public void RunGame()
     {
         int numFold = 0;
         int numPlayers = this.GetPlayers().Count;
         bool[] folded = new bool[numPlayers];
-        burnt[turns] = this.GetDeck().TakeCard();
+        //burning a card
+        this.GetDeck().TakeCard();
         flop[0] = this.GetDeck().TakeCard();
         flop[1] = this.GetDeck().TakeCard();
         flop[2] = this.GetDeck().TakeCard();
@@ -483,7 +479,8 @@ class TexasHoldem : Game
                 }
             }
             turns += 1;
-            burnt[turns] = this.GetDeck().TakeCard();
+            //burn a card
+            this.GetDeck().TakeCard();
             flop[turns + 1] = this.GetDeck().TakeCard();
         }
 
@@ -504,10 +501,10 @@ class TexasHoldem : Game
             for (int player = 0; player < numPlayers; player++)
             {
                 Hand hand =this.GetPlayers()[player].GetHand();
-                if (CheckRoyalFlush(hand, flop))
-                {
-                    draw.Append(this.GetPlayers()[player].GetName());
-                }
+                // if (CheckRoyalFlush(hand, flop))
+                // {
+                //     draw.Append(this.GetPlayers()[player].GetName());
+                // }
             }
 
             if (draw.Count ==1)
@@ -530,67 +527,124 @@ class TexasHoldem : Game
         }
     }
 
-    public bool CheckRoyalFlush(Hand hand, Card[] flop)
+    public int[] CheckStraightFlush(Card[] combinedHand)
     {
-        
-        //this code is currently messed up due to the fack that it is incapable of checking 
-        //whether or not all the cards in the flush are in the same suit
-        //and instead assumes the suit of the royal flush is the suit of the first card
-        HashSet<int> flush = new HashSet<int>();
-        //the number of cards not in the royal flush
-        int numFailures = 0;
-        //ace
-        flush.Add(1);
-        //everything else
-        for (int num = 10; num < 14; num++)
+        //takes in the combined Hand of the player and the flop, returns a list of 2 integers. 
+        //first integer represents if it is a straight flush, second integer represents the smallest number in the straight
+        //flush
+        int[] output = new int[2];
+        int diamondCount = 0;
+        int clubCount = 0;
+        int heartCount = 0;
+        int spadeCount = 0;
+        for (int index = 0; index < 7; index++)
         {
-            flush.Add(num);
+            int suit = combinedHand[index].GetSuit();
+            switch (suit)
+            {
+                case 0:
+                    diamondCount += 1;
+                    break;
+                case 1:
+                    clubCount += 1;
+                    break;
+                case 2:
+                    heartCount += 1;
+                    break;
+                case 3:
+                    spadeCount += 1;
+                    break;
+            }
         }
-        int suit = hand.GetHand()[0].GetSuit();
-        for (int index = 0; index < 2; index++)
+        List<Card> trimmedHand = new List<Card>();
+        if (diamondCount > 4)
         {
-            int num = hand.GetHand()[index].GetNumber();
-            if (flush.Contains(num)&&hand.GetHand()[index].GetSuit()==suit)
-            {
-                flush.Remove(num);
-            }
-            else
-            {
-                numFailures += 1;
-            }
+            //the suit is in diamond
+            trimmedHand = SpecialSort(combinedHand,0);
+        }
+        else if (clubCount > 4)
+        {
+            //the suit is in clubs
+            trimmedHand = SpecialSort(combinedHand, 1);
+        }
+        else if (heartCount > 4)
+        {
+            //the suit is in hearts
+           trimmedHand = SpecialSort(combinedHand, 2);
+        }
+        else if (spadeCount > 4)
+        {
+            //the suit is in spades
+            trimmedHand = SpecialSort(combinedHand, 3);
+        }
+        else
+        {
+            //there is no flush
+            output[0] = 0;
+            return output;
         }
 
-        for (int index = 0; index < 5; index++)
+        if (CheckContinuous(trimmedHand))
         {
-            if (numFailures > 2)
-            {
-                //it is quite literally impossible to get a royal flush
-                return false;
-            }
-            int num = flop[index].GetNumber();
-            if (flush.Contains(num) && flop[index].GetSuit()==suit)
-            {
-                flush.Remove(num);
-            }
-            else
-            {
-                numFailures += 1;
-            }
+            output[0] = 0;
+            output[1] = trimmedHand[0].GetNumber();
         }
-        //if you have made it to here, you must have a royal flush
-        return true;
+        return output;
     }
 
-    public void RestartPoker()
+    private List<Card> SpecialSort(Card[] hand, int suit)
     {
-        this.RestartGame();
-        burnt = new Card[4];
+        List<Card> trimmedHand = new List<Card>();
+        for (int index = 0; index < 7; index++)
+        {
+            if (hand[index].GetSuit() == suit)
+            {
+                //only add cards that could be part of a straight flush
+                trimmedHand.Add(hand[index]);
+            }
+        }
+
+        for (int index = 0; index < trimmedHand.Count; index++)
+        {
+            //insertion sort it
+            Card checking = trimmedHand[index];
+            int value = checking.GetNumber();
+            int position = index;
+            while (position > 0 && value < trimmedHand[position - 1].GetNumber())
+            {
+                trimmedHand[position] = trimmedHand[position - 1];
+                position -= 1;
+            }
+            trimmedHand[position] = checking;
+        }
+        return trimmedHand;
+    }
+    private bool CheckContinuous(List<Card> trimmedHand)
+    {
+        //this breaks if there is an ace in the deck
+        //should probably make a new Poker Card
+        int previousValue = trimmedHand[0].GetNumber();
+        for (int index = 0; index < trimmedHand.Count; index++)
+        {
+            if ((trimmedHand[index].GetNumber() - previousValue) > 1)
+            {
+                //it is not a straight flush
+                return false;
+            }
+        }
+        return true;
+    }
+    public override void RestartGame()
+    {
+        deck = new Deck();
+        deck.ShuffleDeck();
         flop = new Card[5];
         turns = 1;
-        burnt[0] = this.GetDeck().TakeCard();
+        //burn a card
+        this.GetDeck().TakeCard();
         for (int index = 0; index < this.GetPlayers().Count; index++)
         {
-            Hand hand = new Hand(this.GetDeck());
+            Hand hand = new Hand(deck);
             this.GetPlayers()[index].ResetHand(hand);
         }
     }
